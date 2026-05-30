@@ -1,0 +1,578 @@
+[
+  {
+    "model": "experiment.question72",
+    "pk": 1,
+    "fields": {
+      "number": 1,
+      "text": "Are emeralds the hardest naturally occurring substance?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 2,
+    "fields": {
+      "number": 2,
+      "text": "Are there 16 tablespoons in a cup?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 3,
+    "fields": {
+      "number": 3,
+      "text": "Are there 50 cards in a deck of playing cards?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 4,
+    "fields": {
+      "number": 4,
+      "text": "Are viruses smaller than bacteria?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 5,
+    "fields": {
+      "number": 5,
+      "text": "Did Abraham Lincoln sign the Emancipation Proclamation?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 6,
+    "fields": {
+      "number": 6,
+      "text": "Did Ernest Hemingway write Farewell to Arms?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 7,
+    "fields": {
+      "number": 7,
+      "text": "Did Leonardo da Vinci paint the Sistine Chapel?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 8,
+    "fields": {
+      "number": 8,
+      "text": "Did Scott Amundsen sail to the Antarctic in the ship Discovery?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 9,
+    "fields": {
+      "number": 9,
+      "text": "Did the Dutch artist, Rembrandt, cut off his right ear?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 10,
+    "fields": {
+      "number": 10,
+      "text": "Did the Titanic sink in the 1800's?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 11,
+    "fields": {
+      "number": 11,
+      "text": "Did the Wright brothers build the first powered airplane?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 12,
+    "fields": {
+      "number": 12,
+      "text": "Did Thomas Edison invent the telephone?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 13,
+    "fields": {
+      "number": 13,
+      "text": "Did William Faulkner write 'Death of a Salesman' in 1949?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 14,
+    "fields": {
+      "number": 14,
+      "text": "Do humans have 23 pairs of chromosomes?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 15,
+    "fields": {
+      "number": 15,
+      "text": "Does a higher pH indicate a stronger acid?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 16,
+    "fields": {
+      "number": 16,
+      "text": "Does Queen Elizabeth II face to the right on a British coin?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 17,
+    "fields": {
+      "number": 17,
+      "text": "Does the Chunnel connect England and Belgium?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 18,
+    "fields": {
+      "number": 18,
+      "text": "Does the Prime Meridian pass through London?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 19,
+    "fields": {
+      "number": 19,
+      "text": "Does the sun set in the East?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 20,
+    "fields": {
+      "number": 20,
+      "text": "Does the U.S. flag have 50 stars?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 21,
+    "fields": {
+      "number": 21,
+      "text": "If two variables are strongly correlated, does that prove one causes the other?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 22,
+    "fields": {
+      "number": 22,
+      "text": "Is 18 at the top spot on a dart board?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 23,
+    "fields": {
+      "number": 23,
+      "text": "Is 24 karats of gold, pure gold?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 24,
+    "fields": {
+      "number": 24,
+      "text": "Is a baby whale called a calf?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 25,
+    "fields": {
+      "number": 25,
+      "text": "Is a bone specialist called a pediatrician?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 26,
+    "fields": {
+      "number": 26,
+      "text": "Is a dried plum a raisin?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 27,
+    "fields": {
+      "number": 27,
+      "text": "Is a group of cattle called a herd?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 28,
+    "fields": {
+      "number": 28,
+      "text": "Is a group of lions called a pride?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 29,
+    "fields": {
+      "number": 29,
+      "text": "Is a large French country house called a gateux?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 30,
+    "fields": {
+      "number": 30,
+      "text": "Is a leap year 366 days long?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 31,
+    "fields": {
+      "number": 31,
+      "text": "Is a salad containing diced apple, celery, walnuts and mayonnaise known as a Nicoise salad?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 32,
+    "fields": {
+      "number": 32,
+      "text": "Is a terrapin a type of turtle?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 33,
+    "fields": {
+      "number": 33,
+      "text": "Is a tomato a root vegetable?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 34,
+    "fields": {
+      "number": 34,
+      "text": "Is Arizona known as the Lone Star State?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 35,
+    "fields": {
+      "number": 35,
+      "text": "Is Baklava a type of musical instrument?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 36,
+    "fields": {
+      "number": 36,
+      "text": "Is Bonsai the common name of a Japanese dwarf tree?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 37,
+    "fields": {
+      "number": 37,
+      "text": "Is Buenos Aires the capital of Brazil?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 38,
+    "fields": {
+      "number": 38,
+      "text": "Is Cairo the capital of Egypt?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 39,
+    "fields": {
+      "number": 39,
+      "text": "Is Canada larger than China?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 40,
+    "fields": {
+      "number": 40,
+      "text": "Is Canada larger than the United States?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 41,
+    "fields": {
+      "number": 41,
+      "text": "Is Catania located on the French Island of Corsica?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 42,
+    "fields": {
+      "number": 42,
+      "text": "Is Gothenburg the capital of Sweden?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 43,
+    "fields": {
+      "number": 43,
+      "text": "Is light a form of electromagnetic radiation?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 44,
+    "fields": {
+      "number": 44,
+      "text": "Is Mount Everest located in the United States?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 45,
+    "fields": {
+      "number": 45,
+      "text": "Is nitrogen the main gas in air?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 46,
+    "fields": {
+      "number": 46,
+      "text": "Is Tehran the capital of Iran?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 47,
+    "fields": {
+      "number": 47,
+      "text": "Is the chemical symbol for gold 'Au'?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 48,
+    "fields": {
+      "number": 48,
+      "text": "Is the maple leaf on the Canadian flag red?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 49,
+    "fields": {
+      "number": 49,
+      "text": "Is the median always the same as the mean in any dataset?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 50,
+    "fields": {
+      "number": 50,
+      "text": "Is the Mona Lisa displayed in the British Museum?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 51,
+    "fields": {
+      "number": 51,
+      "text": "Is the Nile river longer in length than the Amazon river?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 52,
+    "fields": {
+      "number": 52,
+      "text": "Is the Pacific Ocean the largest ocean on Earth?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 53,
+    "fields": {
+      "number": 53,
+      "text": "Is the Smithsonian Institute located in Washington D.C.?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 54,
+    "fields": {
+      "number": 54,
+      "text": "Is the speed of light faster than the speed of sound?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 55,
+    "fields": {
+      "number": 55,
+      "text": "Is the square root of 2 a rational number?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 56,
+    "fields": {
+      "number": 56,
+      "text": "Is the Statue of Liberty located in New York?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 57,
+    "fields": {
+      "number": 57,
+      "text": "Is the sum of the interior angles of any triangle 180 degrees?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 58,
+    "fields": {
+      "number": 58,
+      "text": "Is the Tour de France a car race?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 59,
+    "fields": {
+      "number": 59,
+      "text": "Is Toronto further above sea level than Montreal?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 60,
+    "fields": {
+      "number": 60,
+      "text": "Is Toronto the capital of Canada?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 61,
+    "fields": {
+      "number": 61,
+      "text": "Is Victoria the capital of British Columbia?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 62,
+    "fields": {
+      "number": 62,
+      "text": "On Instagram, does Restrict block comments?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 63,
+    "fields": {
+      "number": 63,
+      "text": "On TikTok, do private accounts hide videos from followers?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 64,
+    "fields": {
+      "number": 64,
+      "text": "Was Abraham Lincoln the 12th president of the United States?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 65,
+    "fields": {
+      "number": 65,
+      "text": "Was Frederic Bartholdi the sculptor of the Statue of Liberty?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 66,
+    "fields": {
+      "number": 66,
+      "text": "Was George Lucas the director of Jaws and Raiders of the Lost Ark?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 67,
+    "fields": {
+      "number": 67,
+      "text": "Was Icarus Ulysses' son?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 68,
+    "fields": {
+      "number": 68,
+      "text": "Was Oscar Goldman the alter ego of The Incredible Hulk?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 69,
+    "fields": {
+      "number": 69,
+      "text": "Was the first telephone call made in the 1800s?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 70,
+    "fields": {
+      "number": 70,
+      "text": "Was William Wallace responsible for driving the English out of Scotland in 1297?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 71,
+    "fields": {
+      "number": 71,
+      "text": "Were the 2000 Summer Olympics held in Sydney?"
+    }
+  },
+  {
+    "model": "experiment.question72",
+    "pk": 72,
+    "fields": {
+      "number": 72,
+      "text": "Were the 2004 Summer Olympics held in Athens?"
+    }
+  }
+]

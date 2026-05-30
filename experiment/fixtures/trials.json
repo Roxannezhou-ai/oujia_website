@@ -1,0 +1,130 @@
+[
+  {
+    "model": "experiment.trial16",
+    "pk": 1,
+    "fields": {
+      "number": 1,
+      "text": "Is Sydney the capital of Australia?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 2,
+    "fields": {
+      "number": 2,
+      "text": "Is Mars the closest planet to earth?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 3,
+    "fields": {
+      "number": 3,
+      "text": "Does the standard Olympic swimming pool have 9 lanes?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 4,
+    "fields": {
+      "number": 4,
+      "text": "Is the mascot of Stanford a tree?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 5,
+    "fields": {
+      "number": 5,
+      "text": "Is Mexico directly North of South America?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 6,
+    "fields": {
+      "number": 6,
+      "text": "Was 2007 the year of pig?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 7,
+    "fields": {
+      "number": 7,
+      "text": "Is Montreal further above sea level than Toronto?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 8,
+    "fields": {
+      "number": 8,
+      "text": "Is Cu the symbol of the chemical element cobalt?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 9,
+    "fields": {
+      "number": 9,
+      "text": "Is Puerto Rico a country?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 10,
+    "fields": {
+      "number": 10,
+      "text": "Is a microchip mostly made of carbon?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 11,
+    "fields": {
+      "number": 11,
+      "text": "Is most of Africa North of the equator?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 12,
+    "fields": {
+      "number": 12,
+      "text": "Is the earth flat?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 13,
+    "fields": {
+      "number": 13,
+      "text": "Does an octopus typically have three hearts?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 14,
+    "fields": {
+      "number": 14,
+      "text": "Is Stephen Harper the Prime Minister of Canada?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 15,
+    "fields": {
+      "number": 15,
+      "text": "Is Venus the brightest planet in the Solar System?"
+    }
+  },
+  {
+    "model": "experiment.trial16",
+    "pk": 16,
+    "fields": {
+      "number": 16,
+      "text": "Were Little Boy & Fat Man the names of movies?"
+    }
+  }
+]
