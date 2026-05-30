@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}Demographics Questionnaire{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Demographics Questionnaire</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-5">
+                        <label for="hsp_id" class="form-label h5">
+                            What is your HSP ID?&nbsp; (first 4 digits of your student number, birth month, birthday)
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="hsp_id" name="hsp_id" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <fieldset>
+                            <legend class="h5 mb-3">Have you ever heard about the Ouija board until today?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="heard_ouija" id="heard_ouija_yes" value="Yes" required>
+                                <label class="form-check-label" for="heard_ouija_yes">Yes</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="heard_ouija" id="heard_ouija_maybe" value="Maybe">
+                                <label class="form-check-label" for="heard_ouija_maybe">Maybe</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="heard_ouija" id="heard_ouija_no" value="No">
+                                <label class="form-check-label" for="heard_ouija_no">No</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-5">
+                        <fieldset>
+                            <legend class="h5 mb-3">Have you played with an Ouija board before?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="played_ouija" id="played_ouija_yes" value="Yes" required>
+                                <label class="form-check-label" for="played_ouija_yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="played_ouija" id="played_ouija_no" value="No">
+                                <label class="form-check-label" for="played_ouija_no">No</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="planchette_explanation" class="form-label h5">
+                            In general, how do you explain the movement of the planchette on the board?
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="planchette_explanation" name="planchette_explanation" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="percent_life_in_north_america" class="form-label h5">
+                            What percentage of your life have you spent IN North America? (ie. 80 %). (Please EXCLUDE the time you have spent travelling in countries other than North America.)
+                        </label>
+                        <div class="d-flex justify-content-between text-muted mb-2" aria-hidden="true">
+                            <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span>
+                        </div>
+                        <div class="fw-semibold mb-2">Percentage: <span id="percent-in-value">0</span></div>
+                        <input type="range" class="form-range" id="percent_life_in_north_america" name="percent_life_in_north_america" min="0" max="100" step="1" value="0" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="percent_life_outside_north_america" class="form-label h5">
+                            What percentage of your life have you spent OUTSIDE North America? (Please EXCLUDE the time you have spent travelling or sojourning in countries other than North America)
+                        </label>
+                        <div class="d-flex justify-content-between text-muted mb-2" aria-hidden="true">
+                            <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span>
+                        </div>
+                        <div class="fw-semibold mb-2">Percentage: <span id="percent-out-value">0</span></div>
+                        <input type="range" class="form-range" id="percent_life_outside_north_america" name="percent_life_outside_north_america" min="0" max="100" step="1" value="0" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="birth_city_country" class="form-label h5">What is your city and country of birth (ie. Vancouver, Canada)</label>
+                        <input type="text" class="form-control form-control-lg" id="birth_city_country" name="birth_city_country" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="mother_birth_city_country" class="form-label h5">Your mother's city and country of birth?</label>
+                        <input type="text" class="form-control form-control-lg" id="mother_birth_city_country" name="mother_birth_city_country" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="father_birth_city_country" class="form-label h5">Your father's city and country of birth?</label>
+                        <input type="text" class="form-control form-control-lg" id="father_birth_city_country" name="father_birth_city_country" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="primary_language" class="form-label h5">Your primary language (The language you most often use?)</label>
+                        <input type="text" class="form-control form-control-lg" id="primary_language" name="primary_language" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="other_languages" class="form-label h5">
+                            Please, list any languages OTHER than English for which you have intermediate reading, writing and speaking competencies. If English is your only language, then leave blank. (Specify in the order of MOST to LEAST competent )
+                        </label>
+                        <textarea class="form-control" id="other_languages" name="other_languages" rows="4"></textarea>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="countries_over_one_month" class="form-label h5">
+                            Which countries have you been in for more than a month, and how many months/years have you spent there (including where you're living currently)?<br>
+                            ie. India: 2 months, Canada: 10 years ...
+                        </label>
+                        <textarea class="form-control" id="countries_over_one_month" name="countries_over_one_month" rows="6" required></textarea>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="high_school_location" class="form-label h5">Where did you go to high school? (eg. Vancouver, British Columbia)</label>
+                        <input type="text" class="form-control form-control-lg" id="high_school_location" name="high_school_location" required>
+                    </div>
+
+                    <div class="mb-5">
+                        <fieldset>
+                            <legend class="h5 mb-3">Did you attend an International school?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="attended_international_school" id="international_school_yes" value="Yes" required>
+                                <label class="form-check-label" for="international_school_yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="attended_international_school" id="international_school_no" value="No">
+                                <label class="form-check-label" for="international_school_no">No</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-5">
+                        <fieldset>
+                            <legend class="h5 mb-3">Were/Are you on Exchange?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="on_exchange" id="on_exchange_yes" value="Yes" required>
+                                <label class="form-check-label" for="on_exchange_yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="on_exchange" id="on_exchange_no" value="No">
+                                <label class="form-check-label" for="on_exchange_no">No</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-4">
+                        <fieldset>
+                            <legend class="h5 mb-3">Would you classify yourself as more:</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="cultural_classification" id="cultural_western" value="Western" required>
+                                <label class="form-check-label" for="cultural_western">Western</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cultural_classification" id="cultural_non_western" value="Non-Western">
+                                <label class="form-check-label" for="cultural_non_western">Non-Western</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Demographics</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function bindPercentSlider(inputId, outputId) {
+    const input = document.getElementById(inputId);
+    const output = document.getElementById(outputId);
+    if (!input || !output) return;
+    const update = () => {
+        output.textContent = input.value;
+    };
+    input.addEventListener('input', update);
+    update();
+}
+
+bindPercentSlider('percent_life_in_north_america', 'percent-in-value');
+bindPercentSlider('percent_life_outside_north_america', 'percent-out-value');
+</script>
+{% endblock %}

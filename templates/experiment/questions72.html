@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load experiment_tags %}
+
+{% block title %}Initial Question Set{% endblock %}
+
+{% block extra_css %}
+<style>
+    .question-item {
+        padding: 1rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .question-item:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    .question-text {
+        font-weight: 600;
+    }
+    .choice-select {
+        min-width: 110px;
+    }
+</style>
+{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Initial Question Set</h4>
+                <small class="text-muted">Answer each item Yes or No, then mark whether you are Sure or Guessing.</small>
+            </div>
+            <div class="card-body p-0">
+                <form method="post" id="questions-form">
+                    {% csrf_token %}
+                    
+                    {% for question in questions %}
+                    <div class="question-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="question-text">{{ question.number }}. {{ question.text }}</div>
+                            </div>
+                            <div class="col-md-2 mt-3 mt-md-0">
+                                <label class="form-label small mb-1">Answer</label>
+                                {% with response=existing_responses|get_item:question.id %}
+                                <select class="form-select choice-select" name="answer_{{ question.number }}" required>
+                                    <option value="">-</option>
+                                    <option value="Y" {% if response and response.answer == 'Y' %}selected{% endif %}>Y</option>
+                                    <option value="N" {% if response and response.answer == 'N' %}selected{% endif %}>N</option>
+                                </select>
+                                {% endwith %}
+                            </div>
+                            <div class="col-md-2 mt-3 mt-md-0">
+                                <label class="form-label small mb-1">Confidence</label>
+                                {% with response=existing_responses|get_item:question.id %}
+                                <select class="form-select choice-select" name="confidence_{{ question.number }}" required>
+                                    <option value="">-</option>
+                                    <option value="G" {% if response and response.confidence == 'G' %}selected{% endif %}>G</option>
+                                    <option value="S" {% if response and response.confidence == 'S' %}selected{% endif %}>S</option>
+                                </select>
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="p-4">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Initial Responses</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('questions-form').addEventListener('submit', function(e) {
+    const questions = {{ questions|length }};
+    let answered = 0;
+    let confident = 0;
+    
+    for (let i = 1; i <= questions; i++) {
+        const answerValue = document.querySelector(`select[name="answer_${i}"]`)?.value;
+        const confidenceValue = document.querySelector(`select[name="confidence_${i}"]`)?.value;
+        if (answerValue) answered++;
+        if (confidenceValue) confident++;
+    }
+    
+    if (answered < questions || confident < questions) {
+        e.preventDefault();
+        alert(`Please answer all questions. You have answered ${answered}/${questions} questions and ${confident}/${questions} confidence ratings.`);
+    }
+});
+</script>
+{% endblock %}

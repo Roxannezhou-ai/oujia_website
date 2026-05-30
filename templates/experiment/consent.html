@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Consent Form{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Consent</h4>
+            </div>
+            <div class="card-body">
+                <div class="border rounded-3 p-4 mb-4 bg-light-subtle">
+                    <p class="text-center fw-bold mb-1">The UNIVERSITY OF BRITISH COLUMBIA</p>
+                    <h5 class="text-center mb-4">Ouija</h5>
+
+                    <p><strong>Principal Investigator:</strong> Dr. Ronald A. Rensink, Department of Psychology, UBC</p>
+                    <p><strong>Research Assistant:</strong> Parisa Zaini, Department of Psychology, UBC<br>Phone: 604.822.2579</p>
+
+                    <h5 class="mt-4">Introduction and Purpose</h5>
+                    <p>
+                        The Ouija board, as a special kind of talking board, has long drawn the attention from spiritualists, scientists, and psychologists. Its power to move "by itself" and give answers to questions seems all but magical. Efforts to study phenomena similar to Ouija spelling, such as table turning, can be traced back to as early as 1853. We are interested in exploring the psychological process of the Ouija phenomenon by using controlled experiments.
+                    </p>
+
+                    <h5 class="mt-4">Study Procedures</h5>
+                    <p>
+                        If you agree to participate, the experiment will take about 1.5 hour of your time (a single session). You will be asked a set of simple questions (e.g., "Are you a UBC student?") followed by more complex questions with the Ouija board. You will also be asked to fill out a personality questionnaire as well.
+                    </p>
+                    <p>
+                        At the end of the experiment you will be fully informed about all aspects of the study. There are no known risks associated with this research. You may refuse participation at any point in the experiment by letting the experimenter know.
+                    </p>
+
+                    <h5 class="mt-4">Confidentiality</h5>
+                    <p>
+                        Your identity will be kept strictly confidential. All of your questionnaire and test results will be kept completely anonymous. None of the forms will contain any information that would permit anyone to link the results with you. To protect your anonymity, all documents will be identified only by code number and kept in a locked filing cabinet in a secured laboratory room and on a password protected computer. You will not be identified by name in any reports of the completed study. Only the principal investigator, Dr. Ronald Rensink, co-investigator Parisa Zaini, and research assistants working on the project will have access to any of your test results.
+                    </p>
+
+                    <h5 class="mt-4">Remuneration</h5>
+                    <p>
+                        The experiment will take about 1.5 hour of your time and you will receive 1.5 course credit per session for your participation.
+                    </p>
+
+                    <h5 class="mt-4">Contact Information about the study</h5>
+                    <p>
+                        If you have any questions or require further information about this study, please contact Dr. Ronald A. Rensink at 604.822.2579.
+                    </p>
+
+                    <h5 class="mt-4">Contact Information about the rights of research participants</h5>
+                    <p>
+                        If you have any concerns or complaints about your rights as a research participant and/or your experiences while participating in this study, contact the Research Participant Complaint Line in the UBC Office of Research Ethics at 604-822-8598 or if long distance e-mail RSIL@ors.ubc.ca or call toll free 1-877-822-8598.
+                    </p>
+
+                    <h5 class="mt-4">Consent</h5>
+                    <p class="mb-0">
+                        Your participation in this study is entirely voluntary and you may refuse to participate or withdraw from the study at any time. Please feel free to ask the experimenter at any time any additional questions that you may have about the study.
+                    </p>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <h5>Consent</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="consent" 
+                                   id="consent_yes" value="yes" required>
+                            <label class="form-check-label" for="consent_yes">
+                                I consent to participate in this study and will continue to the experiment.
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="consent" 
+                                   id="consent_no" value="no">
+                            <label class="form-check-label" for="consent_no">
+                                I do not consent to participate in this study. (The experiment will now terminate.)
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

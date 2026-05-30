@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %}Participant Dashboard{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+    <a href="{% url 'experiment:logout' %}?role=P" class="btn btn-outline-light btn-sm">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Session Status</h5>
+                <span class="badge stage-badge" id="stage-badge">{{ session.get_stage_display_name }}</span>
+            </div>
+            <div class="card-body">
+                <p class="lead">Current Stage: <strong id="stage-name">{{ session.get_stage_display_name }}</strong></p>
+                
+                <hr>
+                
+                <div class="row">
+                    {% if session.stage == 1 %}
+                        <div class="col-12">
+                            {% if has_consent %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> Consent submitted. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info mb-0">
+                                    Loading consent form...
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 2 %}
+                        <div class="col-12">
+                            {% if has_demographics %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> Demographics submitted. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info mb-0">
+                                    Loading demographics questionnaire...
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 3 %}
+                        <div class="col-12">
+                            {% if has_completed_72 %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> You have answered all 72 questions. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info mb-0">
+                                    Loading initial question set...
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 4 %}
+                        <div class="col-12">
+                            {% if has_prediction_task %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> Prediction-feedback task saved. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <a href="{% url 'experiment:ouija' %}" class="btn btn-primary btn-lg w-100">
+                                    Start Prediction Feedback Task
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 5 %}
+                        <div class="col-12">
+                            {% if has_post_survey %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> Survey submitted. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <a href="{% url 'experiment:post_survey' %}" class="btn btn-primary btn-lg w-100">
+                                    Complete Post-Study Questionnaire
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 6 %}
+                        <div class="col-12">
+                            {% if has_personality_survey %}
+                                <div class="alert alert-success">
+                                    <strong>Complete!</strong> Personality questionnaire submitted. Please wait for the researcher.
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info mb-0">
+                                    Loading personality questionnaire...
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif session.stage == 7 %}
+                        <div class="col-12">
+                            {% if session.debrief_unlocked %}
+                                <a href="{% url 'experiment:debrief' %}" class="btn btn-success btn-lg w-100">
+                                    View Debrief
+                                </a>
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <strong>Almost done!</strong> Please wait for the researcher to unlock the debrief.
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                <strong>Waiting...</strong> Please wait for the researcher to advance to the next stage.
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Your Progress</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 1 %}list-group-item-primary{% endif %}">
+                        <span><strong>1.</strong> Consent</span>
+                        {% if has_consent %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 2 %}list-group-item-primary{% endif %}">
+                        <span><strong>2.</strong> Demographics Questionnaire</span>
+                        {% if has_demographics %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 3 %}list-group-item-primary{% endif %}">
+                        <span><strong>3.</strong> Initial Question Set</span>
+                        {% if has_completed_72 %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 4 %}list-group-item-primary{% endif %}">
+                        <span><strong>4.</strong> Prediction Feedback Task</span>
+                        {% if has_prediction_task %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 5 %}list-group-item-primary{% endif %}">
+                        <span><strong>5.</strong> Post-Study Questionnaire</span>
+                        {% if has_post_survey %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 6 %}list-group-item-primary{% endif %}">
+                        <span><strong>6.</strong> Personality Questionnaire</span>
+                        {% if has_personality_survey %}<span class="badge bg-success">Complete</span>{% endif %}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center {% if session.stage == 7 %}list-group-item-primary{% endif %}">
+                        <span><strong>7.</strong> Debrief</span>
+                        {% if session.debrief_unlocked %}<span class="badge bg-success">Unlocked</span>{% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let lastVerbalPlayNonce = {{ initial_verbal_play_nonce|default:0 }};
+
+function playVerbalAudio(trialNumber) {
+    if (!trialNumber) return;
+    const audio = new Audio(`/static/experiment/audio/verbal_q${trialNumber}.wav`);
+    audio.play().catch(() => {});
+}
+
+setInterval(function() {
+    fetch('/api/session/{{ session.group_id }}/status/')
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('stage-badge').textContent = data.stage_name;
+            document.getElementById('stage-name').textContent = data.stage_name;
+
+            if (data.verbal_play_nonce && data.verbal_play_nonce > lastVerbalPlayNonce) {
+                lastVerbalPlayNonce = data.verbal_play_nonce;
+                playVerbalAudio(data.verbal_play_trial_number);
+            }
+
+            if (data.stage != {{ session.stage }} || data.debrief_unlocked != {{ session.debrief_unlocked|yesno:"true,false" }}) {
+                location.reload();
+            }
+        });
+}, 5000);
+</script>
+{% endblock %}

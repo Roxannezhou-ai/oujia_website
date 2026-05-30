@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Personality Questionnaire{% endblock %}
+
+{% block extra_css %}
+<style>
+    .personality-table {
+        min-width: 880px;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .personality-table th,
+    .personality-table td {
+        vertical-align: middle;
+    }
+
+    .personality-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #ffffff;
+        border-bottom: 2px solid var(--line);
+    }
+
+    .personality-table tbody tr:hover {
+        background: #f7faf9;
+    }
+
+    .personality-choice {
+        text-align: center;
+        width: 150px;
+        font-weight: 700;
+    }
+
+    .personality-choice input {
+        transform: scale(1.2);
+    }
+</style>
+{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-xl-11">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Personality Questionnaire</h4>
+            </div>
+            <div class="card-body p-4">
+                <p class="h5 mb-4">Please read each statement. Choose the response that best represents you:</p>
+
+                <div class="mb-4">
+                    <p class="mb-1"><strong>Strongly disagree:</strong> If you strongly disagree or if the statement is definitely false.</p>
+                    <p class="mb-1"><strong>Disagree:</strong> If you disagree or if the statement is mostly false.</p>
+                    <p class="mb-1"><strong>Agree:</strong> If you agree or if the statement is mostly true.</p>
+                    <p class="mb-0"><strong>Strongly agree:</strong> If you strongly agree or if the statement is definitely true.</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="table-responsive">
+                        <table class="table personality-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    {% for value, label in choices %}
+                                    <th class="personality-choice">{{ label }}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td class="fw-semibold">{{ item.text }}</td>
+                                    {% for value, label in choices %}
+                                    <td class="personality-choice">
+                                        <input type="radio" name="personality_{{ item.number }}" value="{{ value }}" aria-label="{{ item.text }} - {{ label }}" required>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Personality Questionnaire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

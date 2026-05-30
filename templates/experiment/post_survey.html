@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Post-Study Questionnaire{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Post-Study Questionnaire</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-5">
+                        <fieldset>
+                            <legend class="h5 mb-3">During the study, which side was assigned to a "YES" answer?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="yes_side_assigned" id="yes_side_left" value="Left side" required>
+                                <label class="form-check-label" for="yes_side_left">Left side</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="yes_side_assigned" id="yes_side_right" value="Right side">
+                                <label class="form-check-label" for="yes_side_right">Right side</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-5">
+                        <fieldset>
+                            <legend class="h5 mb-3">During the study, which side was assigned to a "NO" answer?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="no_side_assigned" id="no_side_left" value="Left side" required>
+                                <label class="form-check-label" for="no_side_left">Left side</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="no_side_assigned" id="no_side_right" value="Right side">
+                                <label class="form-check-label" for="no_side_right">Right side</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mb-4">
+                        <fieldset>
+                            <legend class="h5 mb-3">Did you complete the study?</legend>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="completed_study" id="completed_study_yes" value="Yes" required>
+                                <label class="form-check-label" for="completed_study_yes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="completed_study" id="completed_study_no" value="No">
+                                <label class="form-check-label" for="completed_study_no">No</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Questionnaire</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

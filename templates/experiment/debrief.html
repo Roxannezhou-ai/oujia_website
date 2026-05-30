@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Debrief{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-body p-4 p-md-5">
+                <h4 class="text-center mb-5">Implicit Cognition: The Ouija Project</h4>
+
+                <div class="mb-4">
+                    <p class="mb-0"><strong>Principal Investigator:</strong></p>
+                    <p>
+                        Dr. Ronald A. Rensink<br>
+                        Department of Psychology, UBC<br>
+                        604.822.2579
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="mb-0"><strong>Research Assistant:</strong></p>
+                    <p>
+                        Parisa Zaini<br>
+                        Department of Psychology, UBC<br>
+                        604.612.9995
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="mb-0"><strong>Ethical Clearance:</strong></p>
+                    <p>H08-01248</p>
+                </div>
+
+                <p>
+                    Thank you very much for your participation. We are studying ideomotor effects which is a phenomenon that involves behaviors that are unconsciously initiated to express a thought rather than a response to a sensory stimulus and we are testing if there is a form of nonconscious knowledge that can be expressed from this. <strong>The independent variable was the method of response.</strong> This was based on whether the response was given volitionally or through the Ouija board. <strong>The dependent variable was the response given as yes or no. Our response hypothesis is: if there is a nonconscious knowledge, you will be able to respond to the questions differently than you would consciously.</strong>
+                </p>
+
+                <p>
+                    Now that the experiment is over this debriefing will provide you a detailed explanation regarding the goal of the experiment. During part 2 you were told that you were playing with another participant: this was a deception - the participant was in reality a confederate (a second experimenter), acting as a participant. At the beginning of each trial he/she placed his/her fingers on the platform (planchette) but removed them before the question was asked and placed them back after the question was answered.
+                </p>
+
+                <p>
+                    We apologize sincerely for the deception involved, but this was necessary for you to experience a phenomenon called the "ideomotor effect". In the context of this experiment, it results in a feeling that the other player is moving the platform while you are simply following. In reality you were the only one inducing movement. A critical psychological condition of this phenomenon is that you can attribute the origin of the movement to someone else. Once you know that nothing else but you can move the planchette, the ideomotor effect no longer occurs.
+                </p>
+
+                <p>
+                    Our goal is to understand the underlying mechanism of the ideomotor effect and that is why, in order to elicit and observe it, it was necessary to deceive you into believing that you were playing with another participant!
+                </p>
+
+                <p class="fw-bold">
+                    Now that you know the actual nature of the experiment, you are free to withdraw your data if you wish. If so, please inform the experimenter immediately.
+                </p>
+
+                <div class="text-center mt-4">
+                    <a href="{% url 'experiment:logout' %}?role=P" class="btn btn-primary">
+                        End Session
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

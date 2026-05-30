@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% block title %}Researcher Dashboard{% endblock %}
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-researcher me-3">Researcher</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+    <a href="{% url 'experiment:logout' %}?role=R" class="btn btn-outline-light btn-sm">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Session Control</h5>
+                <span class="badge stage-badge">{{ session.get_stage_display_name }}</span>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'experiment:advance_stage' %}" class="mb-3">
+                    {% csrf_token %}
+                    <div class="row align-items-end">
+                        <div class="col-md-8">
+                            <label class="form-label">Change Stage</label>
+                            <select name="stage" class="form-select">
+                                {% for value, label in stage_choices %}
+                                <option value="{{ value }}" {% if session.stage == value %}selected{% endif %}>
+                                    {{ value }} - {{ label }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">Set Stage</button>
+                        </div>
+                    </div>
+                </form>
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="post" action="{% url 'experiment:unlock_debrief' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning w-100" 
+                                    {% if session.debrief_unlocked %}disabled{% endif %}>
+                                {% if session.debrief_unlocked %}
+                                    Debrief Unlocked ✓
+                                {% else %}
+                                    Unlock Debrief
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{% url 'experiment:export_csv' session.group_id %}" 
+                           class="btn btn-success w-100">
+                            Export CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if session.stage == 4 %}
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Prediction Feedback Task</h5>
+                <span class="badge stage-badge">Participant task</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <p class="mb-1 fw-semibold">The participant answers 16 Yes/No questions under timed conditions.</p>
+                        <p class="text-muted mb-0">The interface displays predetermined MATCHED / DID NOT MATCH feedback and records answer, confidence, and reaction time.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="display-6 fw-bold">{{ prediction_count }}/16</div>
+                        <div class="text-muted small">responses saved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if session.stage == 6 %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Personality Questionnaire</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-0 text-muted">Use this stage for the optional personality questionnaire described in the procedure. The participant dashboard will wait for researcher instructions.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Session Members</h5>
+            </div>
+            <div class="card-body">
+                {% for member in members %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge {% if member.role == 'R' %}role-researcher{% else %}role-participant{% endif %}">
+                        {{ member.get_role_display }}
+                    </span>
+                    <small class="text-muted">{{ member.last_seen|timesince }} ago</small>
+                </div>
+                {% empty %}
+                <p class="text-muted">No members yet</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Progress</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Demographics:</strong> {{ demographics_count }}/1 submitted</p>
+                <p><strong>Initial Questions:</strong> {{ response72_count }} responses</p>
+                <p><strong>Prediction Task:</strong> {{ prediction_count }}/16 recorded</p>
+                <p><strong>Post Questionnaire:</strong> monitored from participant dashboard</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let lastVerbalPlayNonce = {{ initial_verbal_play_nonce|default:0 }};
+
+function playVerbalAudioByTrial(trialNumber) {
+    if (!trialNumber) return;
+    const audio = new Audio(`/static/experiment/audio/verbal_q${trialNumber}.wav`);
+    audio.play().catch(() => {});
+}
+
+document.querySelectorAll('.save-verbal').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const trialId = this.dataset.trial;
+        const row = document.getElementById('trial-' + trialId);
+        const answer = row.querySelector('.answer-select').value;
+        const confidence = row.querySelector('.confidence-select').value;
+        
+        if (!answer || !confidence) {
+            alert('Please select both answer and confidence');
+            return;
+        }
+        
+        fetch('{% url "experiment:verbal_record" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `trial_id=${trialId}&answer=${answer}&confidence=${confidence}`
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                this.textContent = 'Saved ✓';
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-success');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.play-verbal').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const trialId = this.dataset.trial;
+        this.disabled = true;
+        this.textContent = 'Playing...';
+
+        fetch('{% url "experiment:verbal_play" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `trial_id=${trialId}`
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.audio_url) {
+                    const audio = new Audio(data.audio_url);
+                    audio.play().catch(() => {});
+                    lastVerbalPlayNonce = Math.max(lastVerbalPlayNonce, data.nonce || 0);
+                }
+                this.textContent = 'Play';
+                this.disabled = false;
+            })
+            .catch(() => {
+                this.textContent = 'Play';
+                this.disabled = false;
+            });
+    });
+});
+
+setInterval(function() {
+    fetch('/api/session/{{ session.group_id }}/status/', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(data => {
+            if (data.verbal_play_nonce && data.verbal_play_nonce > lastVerbalPlayNonce) {
+                lastVerbalPlayNonce = data.verbal_play_nonce;
+                playVerbalAudioByTrial(data.verbal_play_trial_number);
+            }
+        });
+}, 1000);
+
+</script>
+{% endblock %}

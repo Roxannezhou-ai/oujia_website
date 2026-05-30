@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Ideo Project{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-9">
+        <div class="card mb-4">
+            <div class="card-body p-4 p-md-5 text-center">
+                <p class="text-uppercase fw-bold small text-muted mb-2">Online Behavioral Research Platform</p>
+                <h1 class="h3 mb-3">Ideo Project Study</h1>
+                <p class="lead text-muted mb-4">Join your scheduled session with the role code provided by the researcher.</p>
+                <a href="{% url 'experiment:join' %}" class="btn btn-primary btn-lg px-4">
+                    Join Session
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Accepted Code Format</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 h-100 bg-light-subtle">
+                            <div class="fw-bold mb-1">R-XX OVS/OVM</div>
+                            <div class="text-muted small">Researcher</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 border rounded-3 h-100 bg-light-subtle">
+                            <div class="fw-bold mb-1">P-XX OVS/OVM</div>
+                            <div class="text-muted small">Participant</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted small mt-3 mb-0">Use the same number and condition (OVS/OVM) for the researcher and participant to join the same group.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

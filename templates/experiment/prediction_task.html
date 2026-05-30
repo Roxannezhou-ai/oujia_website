@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}Prediction Feedback Task{% endblock %}
+
+{% block nav_right %}
+<div class="d-flex align-items-center">
+    <span class="badge role-participant me-3">Participant</span>
+    <span class="text-white me-3">Group: {{ session.group_id }}</span>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .task-shell {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    .task-panel {
+        min-height: 560px;
+        display: grid;
+        align-content: center;
+        gap: 1.25rem;
+        padding: clamp(1.25rem, 4vw, 3rem);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+    }
+
+    .task-kicker {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .question-display {
+        min-height: 150px;
+        display: flex;
+        align-items: center;
+        font-size: clamp(1.45rem, 3vw, 2.35rem);
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--text);
+    }
+
+    .response-grid,
+    .confidence-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+
+    .choice-button {
+        min-height: 72px;
+        border: 1px solid #a7b2bf;
+        border-radius: 8px;
+        background: #f8fafc;
+        color: #172033;
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .choice-button:hover,
+    .choice-button:focus {
+        border-color: var(--brand);
+        background: #eef9f4;
+    }
+
+    .feedback-banner {
+        min-height: 118px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: clamp(1.8rem, 5vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+    }
+
+    .feedback-match {
+        background: #e7f8ef;
+        color: #146c43;
+        border: 1px solid #8dd4aa;
+    }
+
+    .feedback-miss {
+        background: #fff3e6;
+        color: #9a4d00;
+        border: 1px solid #f0bf7b;
+    }
+
+    .progress-track {
+        height: 10px;
+        border-radius: 999px;
+        background: #e8edf2;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        width: 0;
+        height: 100%;
+        background: var(--brand);
+        transition: width 180ms ease;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="task-shell">
+    <form method="post" id="prediction-form">
+        {% csrf_token %}
+        <div id="hidden-fields"></div>
+
+        <section class="task-panel" id="intro-panel">
+            <div>
+                <div class="task-kicker mb-3">Main Study Section 2</div>
+                <h1 class="h3 mb-3">Computerized Response-Prediction Task</h1>
+                <p class="text-muted mb-3">
+                    You will answer 16 Yes/No questions as quickly as possible. After each response, the system will display whether its prediction matched your answer.
+                </p>
+                <p class="text-muted mb-0">
+                    After each answer, choose whether you were Sure or Guessing before moving on.
+                </p>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg" id="start-task">Start Task</button>
+        </section>
+
+        <section class="task-panel d-none" id="question-panel" aria-live="polite">
+            <div class="d-flex justify-content-between align-items-center gap-3">
+                <div>
+                    <div class="task-kicker">Trial <span id="trial-number">1</span> of {{ trials|length }}</div>
+                    <div class="text-muted small">Respond as soon as you know your answer.</div>
+                </div>
+                <div class="text-muted small" id="rt-readout">Ready</div>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="question-display" id="question-text"></div>
+            <div class="response-grid">
+                <button type="button" class="choice-button" data-answer="Y">Yes</button>
+                <button type="button" class="choice-button" data-answer="N">No</button>
+            </div>
+        </section>
+
+        <section class="task-panel d-none" id="confidence-panel">
+            <div>
+                <div class="task-kicker mb-3">Confidence</div>
+                <h2 class="h4 mb-0">How confident were you in that answer?</h2>
+            </div>
+            <div class="confidence-grid">
+                <button type="button" class="choice-button" data-confidence="S">Sure</button>
+                <button type="button" class="choice-button" data-confidence="G">Guess</button>
+            </div>
+        </section>
+
+        <section class="task-panel d-none" id="feedback-panel">
+            <div class="feedback-banner" id="feedback-text">MATCHED</div>
+        </section>
+
+        <section class="task-panel d-none" id="complete-panel">
+            <div>
+                <div class="task-kicker mb-3">Complete</div>
+                <h2 class="h3 mb-3">Task complete</h2>
+                <p class="text-muted mb-0">Submit your responses and wait for the researcher to advance the session.</p>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Submit Responses</button>
+        </section>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="trial-data">{{ trials_json|safe }}</script>
+<script>
+(function() {
+    const trials = JSON.parse(document.getElementById("trial-data").textContent).map((trial, index) => ({ ...trial, index }));
+
+    const feedbackPattern = [true, false, true, true, false, true, false, true, true, false, false, true, true, false, true, false];
+    const introPanel = document.getElementById("intro-panel");
+    const questionPanel = document.getElementById("question-panel");
+    const confidencePanel = document.getElementById("confidence-panel");
+    const feedbackPanel = document.getElementById("feedback-panel");
+    const completePanel = document.getElementById("complete-panel");
+    const questionText = document.getElementById("question-text");
+    const trialNumber = document.getElementById("trial-number");
+    const progressFill = document.getElementById("progress-fill");
+    const rtReadout = document.getElementById("rt-readout");
+    const feedbackText = document.getElementById("feedback-text");
+    const hiddenFields = document.getElementById("hidden-fields");
+
+    let index = 0;
+    let shownAt = 0;
+    let currentAnswer = "";
+    let currentRt = 0;
+
+    function show(panel) {
+        [introPanel, questionPanel, confidencePanel, feedbackPanel, completePanel].forEach(item => {
+            item.classList.toggle("d-none", item !== panel);
+        });
+    }
+
+    function renderQuestion() {
+        const trial = trials[index];
+        trialNumber.textContent = String(index + 1);
+        questionText.textContent = trial.text;
+        progressFill.style.width = `${(index / trials.length) * 100}%`;
+        rtReadout.textContent = "Timing";
+        shownAt = performance.now();
+        show(questionPanel);
+    }
+
+    function addHidden(name, value) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        hiddenFields.appendChild(input);
+    }
+
+    function predictedFor(answer, matched, trialNumberValue) {
+        if (matched) return answer;
+        return answer === "Y" ? "N" : "Y";
+    }
+
+    function saveTrial(confidence) {
+        const trial = trials[index];
+        const matched = feedbackPattern[index % feedbackPattern.length];
+        const predicted = predictedFor(currentAnswer, matched, trial.number);
+        addHidden(`answer_${trial.number}`, currentAnswer);
+        addHidden(`confidence_${trial.number}`, confidence);
+        addHidden(`rt_${trial.number}`, String(currentRt));
+        addHidden(`predicted_${trial.number}`, predicted);
+        addHidden(`matched_${trial.number}`, matched ? "1" : "0");
+
+        feedbackText.textContent = matched ? "MATCHED" : "DID NOT MATCH";
+        feedbackText.className = `feedback-banner ${matched ? "feedback-match" : "feedback-miss"}`;
+        progressFill.style.width = `${((index + 1) / trials.length) * 100}%`;
+        show(feedbackPanel);
+
+        window.setTimeout(() => {
+            index += 1;
+            if (index >= trials.length) {
+                show(completePanel);
+                return;
+            }
+            renderQuestion();
+        }, 850);
+    }
+
+    document.getElementById("start-task").addEventListener("click", renderQuestion);
+
+    document.querySelectorAll("[data-answer]").forEach(button => {
+        button.addEventListener("click", () => {
+            currentAnswer = button.dataset.answer;
+            currentRt = Math.round(performance.now() - shownAt);
+            rtReadout.textContent = `${currentRt} ms`;
+            show(confidencePanel);
+        });
+    });
+
+    document.querySelectorAll("[data-confidence]").forEach(button => {
+        button.addEventListener("click", () => saveTrial(button.dataset.confidence));
+    });
+})();
+</script>
+{% endblock %}
